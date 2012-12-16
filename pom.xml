@@ -27,8 +27,16 @@
     <url>https://github.com/jenkinsci/blink1-plugin.git</url>
   </scm>
   
+  <!-- Maintainer Info -->
+  <developers>
+    <developer>
+      <id>maripo</id>
+      <name>Maripo GODA</name>
+      <email>goda.mariko@gmail.com</email>
+    </developer>
+  </developers>
   
-  <url>https://wiki.jenkins-ci.org/display/JENKINS/blink1-plugin</url>
+  <url>https://wiki.jenkins-ci.org/display/JENKINS/Blink1+Plugin</url>
   
   <pluginRepositories>
     <pluginRepository>
