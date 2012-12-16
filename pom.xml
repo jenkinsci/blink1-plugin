@@ -27,6 +27,9 @@
     <url>https://github.com/jenkinsci/blink1-plugin.git</url>
   </scm>
   
+  
+  <url>https://wiki.jenkins-ci.org/display/JENKINS/blink1-plugin</url>
+  
   <pluginRepositories>
     <pluginRepository>
       <id>repo.jenkins-ci.org</id>
