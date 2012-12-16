@@ -19,7 +19,14 @@
       <url>http://repo.jenkins-ci.org/public/</url>
     </repository>
   </repositories>
-
+  
+  <!-- Repository Info -->
+  <scm>
+    <connection>scm:git:ssh://github.com/jenkinsci/blink1-plugin.git</connection>
+    <developerConnection>scm:git:ssh://git@github.com/jenkinsci/blink1-plugin.git</developerConnection>
+    <url>https://github.com/jenkinsci/blink1-plugin.git</url>
+  </scm>
+  
   <pluginRepositories>
     <pluginRepository>
       <id>repo.jenkins-ci.org</id>
