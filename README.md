@@ -7,5 +7,5 @@ It shows build results with blink(1), a tiny full-color status light.
 
 ![](https://raw.github.com/jenkinsci/blink1-plugin/master/doc/blink_colors.jpg)
 
-This plugin uses the Local Web API of blink(1). Please input the URL of the server including port number.
-For further information, please read <a href="https://github.com/todbot/blink1/tree/master/docs">the documentation of blink(1) Local Web API</a>.
+This plugin uses the Local Web API or the command-line tool of blink(1). Please input the URL of the server including port number.
+For further information, please read <a href="https://github.com/todbot/blink1/tree/master/docs">blink(1) Local Web API</a> and <a href="https://github.com/todbot/blink1/tree/master/commandline">Command-line Tool</a>.
