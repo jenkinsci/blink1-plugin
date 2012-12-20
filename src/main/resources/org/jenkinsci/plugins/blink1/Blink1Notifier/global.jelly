@@ -8,6 +8,15 @@
             name="blink1.urlBase"
             value="${descriptor.getUrlBase()}" 
             default="${descriptor.defaultUrlBase()}"/>
+    </f:entry>
+    <f:entry title="Command path"
+        description="Path of blink(1)'s command line tool"
+        help="/plugin/blink1/help-command-path.html"
+        field="commandPath">
+        <f:textbox 
+            name="blink1.commandPath"
+            value="${descriptor.getCommandPath()}" 
+            default="${descriptor.defaultCommandPath()}"/>
       </f:entry>
   </f:section>
 </j:jelly>

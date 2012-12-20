@@ -33,6 +33,7 @@ public class Blink1Notifier extends Notifier {
 	private static final String COLOR_RED = "FF0000";
 	
 	private static final String DEFAULT_URL_BASE = "http://localhost:8934";
+	private static final String DEFAULT_COMMAND_PATH = "/usr/bin/blink1-tool";
 	
 	private static final double DELAY = 0.5;
 
@@ -80,10 +81,14 @@ public class Blink1Notifier extends Notifier {
 		return (DescriptorImpl)super.getDescriptor();
 	}
 	
+	private static final String FORM_KEY_URL_BASE = "urlBase";
+	private static final String FORM_KEY_COMMAND_PATH = "commandPath";
+	
 	@Extension
 	public static final class DescriptorImpl extends BuildStepDescriptor<Publisher> {
 
 		private String urlBase = DEFAULT_URL_BASE;
+		private String commandPath = DEFAULT_COMMAND_PATH;
 		
 		public DescriptorImpl() {
 			load();
@@ -92,6 +97,9 @@ public class Blink1Notifier extends Notifier {
 		public String defaultUrlBase() {
 			return DEFAULT_URL_BASE;
 		}
+		public String defaultCommandPath() {
+			return DEFAULT_COMMAND_PATH;
+		}
 		
 		public boolean isApplicable(Class<? extends AbstractProject> aClass) {
 			return true;
@@ -99,9 +107,10 @@ public class Blink1Notifier extends Notifier {
 		
 		@Override
 		public boolean configure(StaplerRequest req, JSONObject form) throws FormException {
-			if (!form.containsKey("urlBase"))
+			if (!form.containsKey(FORM_KEY_URL_BASE) && !form.containsKey(FORM_KEY_COMMAND_PATH))
 				return false;
-			this.urlBase = form.getString("urlBase");
+			this.urlBase = form.getString(FORM_KEY_URL_BASE);
+			this.commandPath = form.getString(FORM_KEY_COMMAND_PATH);
 			save();
 			return super.configure(req, form);
 		}
@@ -122,6 +131,9 @@ public class Blink1Notifier extends Notifier {
 		
 		public String getUrlBase () {
 			return this.urlBase;
+		}
+		public String getCommandPath () {
+			return this.commandPath;
 		}
 	}
 }
