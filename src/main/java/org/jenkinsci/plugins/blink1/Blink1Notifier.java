@@ -209,7 +209,13 @@ public class Blink1Notifier extends Notifier
 				return FormValidation
 						.error("URL should start with http:// or https://.");
 		}
-
+		public FormValidation doTestBlinkConnection(
+				@QueryParameter("blink1.blinkInterface") final String blinkInterface,
+				@QueryParameter("blink1.urlBase") final String urlBase,
+				@QueryParameter("blink1.commandPath") final String commandPath) {
+				//TODO
+				return FormValidation.ok("Success " + blinkInterface + "," + urlBase + "," + commandPath);
+		}
 		private boolean isValidUrl(String value)
 		{
 			return value.startsWith("http://") || value.startsWith("https://");

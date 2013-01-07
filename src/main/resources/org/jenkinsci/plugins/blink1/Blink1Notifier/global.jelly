@@ -26,5 +26,9 @@
             value="${descriptor.getCommandPath()}" 
             default="${descriptor.defaultCommandPath()}"/>
       </f:entry>
+      <f:validateButton
+           title="Test blink(1) Connection" progress="Testing..."
+           with="blink1.blinkInterface,blink1.urlBase,blink1.commandPath"
+           method="testBlinkConnection" />
   </f:section>
 </j:jelly>
