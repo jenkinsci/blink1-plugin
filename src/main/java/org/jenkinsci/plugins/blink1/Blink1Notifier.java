@@ -233,7 +233,7 @@ public class Blink1Notifier extends Notifier
 					} catch (IOException e)
 					{
 						e.printStackTrace();
-						return FormValidation.ok("Error occured: " + e.getMessage() + "(" + url + ")");
+						return FormValidation.ok("Error occured: " + e.getMessage() + "(" + urlStr + ")");
 					}
 				}
 				else
