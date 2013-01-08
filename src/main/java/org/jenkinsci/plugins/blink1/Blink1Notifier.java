@@ -150,7 +150,7 @@ public class Blink1Notifier extends Notifier
 	private static final String FORM_KEY_BLINK_INTERFACE = "blinkInterface";
 	private static final String FORM_KEY_URL_BASE = "urlBase";
 	private static final String FORM_KEY_COMMAND_PATH = "commandPath";
-	private static final String FORM_VALUE_BLINK_INTERFACE_WEB_API = "webApi";
+	public static final String FORM_VALUE_BLINK_INTERFACE_WEB_API = "webApi";
 	private static final String FORM_VALUE_BLINK_INTERFACE_COMMANDLINE = "commandline";
 
 	@Extension
@@ -212,9 +212,45 @@ public class Blink1Notifier extends Notifier
 		public FormValidation doTestBlinkConnection(
 				@QueryParameter("blink1.blinkInterface") final String blinkInterface,
 				@QueryParameter("blink1.urlBase") final String urlBase,
-				@QueryParameter("blink1.commandPath") final String commandPath) {
-				//TODO
-				return FormValidation.ok("Success " + blinkInterface + "," + urlBase + "," + commandPath);
+				@QueryParameter("blink1.commandPath") final String commandPath) 
+			{
+
+				if (FORM_VALUE_BLINK_INTERFACE_WEB_API.equals(blinkInterface)) 
+				{
+					String urlStr = urlBase
+							+ "/blink1/fadeToRGB?rgb=%230000FF&time="
+							+ DELAY;
+					URL url;
+					try
+					{
+						URLConnection conn;
+						url = new URL(urlStr);
+						conn = url.openConnection();
+						BufferedReader in = new BufferedReader(new InputStreamReader(
+								conn.getInputStream()));
+						in.close();
+						return FormValidation.ok("Request sent: " + urlStr);
+					} catch (IOException e)
+					{
+						e.printStackTrace();
+						return FormValidation.ok("Error occured: " + e.getMessage());
+					}
+				}
+				else
+				{
+					try
+					{
+						String commandStr = commandPath + " --rgb 0,0,255";
+						Process process = Runtime.getRuntime().exec(commandStr);
+						process.waitFor();
+						BufferedReader buf = new BufferedReader(new InputStreamReader(
+								process.getInputStream()));
+						return FormValidation.ok("Command executed: " + commandStr);
+					} catch (Exception e)
+					{
+						return FormValidation.ok("Error occured: " + e.getMessage());
+					}
+				}
 		}
 		private boolean isValidUrl(String value)
 		{
