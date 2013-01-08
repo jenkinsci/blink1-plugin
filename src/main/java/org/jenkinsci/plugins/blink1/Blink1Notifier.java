@@ -233,14 +233,14 @@ public class Blink1Notifier extends Notifier
 					} catch (IOException e)
 					{
 						e.printStackTrace();
-						return FormValidation.ok("Error occured: " + e.getMessage());
+						return FormValidation.ok("Error occured: " + e.getMessage() + "(" + url ")");
 					}
 				}
 				else
 				{
 					try
 					{
-						String commandStr = commandPath + " --rgb 0,0,255";
+						String commandStr = commandPath + " --rgb 0,0,255 --blink 3";
 						Process process = Runtime.getRuntime().exec(commandStr);
 						process.waitFor();
 						BufferedReader buf = new BufferedReader(new InputStreamReader(
