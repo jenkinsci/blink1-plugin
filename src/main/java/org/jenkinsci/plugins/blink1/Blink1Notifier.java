@@ -44,9 +44,13 @@ public class Blink1Notifier extends Notifier
 
 		public String getHexString()
 		{
-			return Integer.toHexString(r & 0xFF)
-					+ Integer.toHexString(g & 0xFF)
-					+ Integer.toHexString(b & 0xFF);
+			String rs = Integer.toHexString(r & 0xFF);
+			String gs = Integer.toHexString(g & 0xFF);
+			String bs = Integer.toHexString(b & 0xFF);
+			if (rs.length() == 1) rs = "0" + rs;
+			if (gs.length() == 1) gs = "0" + gs;
+			if (bs.length() == 1) bs = "0" + bs;
+			return rs + gs + bs;
 		}
 
 		public String getIntString()
