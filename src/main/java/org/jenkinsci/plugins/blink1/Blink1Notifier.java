@@ -80,9 +80,11 @@ public class Blink1Notifier
 
     private static final String DEFAULT_URL_BASE = "http://localhost:8934";
 
-    private static final String DEFAULT_COMMAND_PATH = "/usr/bin/blink1-tool";
+    private static final double DEFAULT_URL_TIME = 2.0;
 
-    private static final double DELAY = 1;
+    private static final String DEFAULT_URL_EXTRA = "";
+
+    private static final String DEFAULT_COMMAND_PATH = "/usr/bin/blink1-tool";
 
     @Override
     public boolean perform(AbstractBuild build, Launcher launcher, BuildListener listener) {
@@ -123,8 +125,8 @@ public class Blink1Notifier
     private void blinkWithLocalWebAPI(BuildListener listener, Color color) {
 
         String urlStr =
-            getDescriptor().getUrlBase() + "/blink1/fadeToRGB?rgb=%23" + color.getHexString()
-                + "&time=" + DELAY;
+            getDescriptor().getUrlBase() + "/blink1/fadeToRGB?color=%23" + color.getHexString()
+                + "&time=" + getDescriptor().getUrlTime() + getDescriptor().getUrlExtra();
         URL url;
         try {
             URLConnection conn;
@@ -157,6 +159,10 @@ public class Blink1Notifier
 
     private static final String FORM_KEY_URL_BASE = "urlBase";
 
+    private static final String FORM_KEY_URL_TIME = "urlTime";
+
+    private static final String FORM_KEY_URL_EXTRA = "urlExtra";
+
     private static final String FORM_KEY_COMMAND_PATH = "commandPath";
 
     private static final String FORM_VALUE_BLINK_INTERFACE_WEB_API = "webApi";
@@ -168,6 +174,10 @@ public class Blink1Notifier
         extends BuildStepDescriptor<Publisher> {
 
         private String urlBase = DEFAULT_URL_BASE;
+
+        private double urlTime = DEFAULT_URL_TIME;
+
+        private String urlExtra = DEFAULT_URL_EXTRA;
 
         private String commandPath = DEFAULT_COMMAND_PATH;
 
@@ -181,6 +191,16 @@ public class Blink1Notifier
         public String defaultUrlBase() {
 
             return DEFAULT_URL_BASE;
+        }
+
+        public double defaultUrlTime() {
+
+            return DEFAULT_URL_TIME;
+        }
+
+        public String defaultUrlExtra() {
+
+            return DEFAULT_URL_EXTRA;
         }
 
         public String defaultCommandPath() {
@@ -204,6 +224,8 @@ public class Blink1Notifier
             if (!form.containsKey(FORM_KEY_URL_BASE) && !form.containsKey(FORM_KEY_COMMAND_PATH))
                 return false;
             this.urlBase = form.getString(FORM_KEY_URL_BASE);
+            this.urlTime = form.getDouble(FORM_KEY_URL_TIME);
+            this.urlExtra = form.getString(FORM_KEY_URL_EXTRA);
             this.commandPath = form.getString(FORM_KEY_COMMAND_PATH);
             this.blinkInterface = form.getString(FORM_KEY_BLINK_INTERFACE);
             save();
@@ -221,10 +243,13 @@ public class Blink1Notifier
         public FormValidation doTestBlinkConnection(
             @QueryParameter("blink1.blinkInterface") final String blinkInterface,
             @QueryParameter("blink1.urlBase") final String urlBase,
+            @QueryParameter("blink1.urlTime") final double urlTime,
+            @QueryParameter("blink1.urlExtra") final String urlExtra,
             @QueryParameter("blink1.commandPath") final String commandPath) {
 
             if (FORM_VALUE_BLINK_INTERFACE_WEB_API.equals(blinkInterface)) {
-                String urlStr = urlBase + "/blink1/fadeToRGB?rgb=%230000FF&time=" + DELAY;
+                String urlStr = urlBase + "/blink1/fadeToRGB?color=%230000FF&time=" + urlTime
+                    + urlExtra;
                 URL url;
                 try {
                     URLConnection conn;
@@ -263,6 +288,11 @@ public class Blink1Notifier
             return "Blink1Notifier";
         }
 
+        public String getBlinkInterface() {
+
+            return this.blinkInterface;
+        }
+
         public boolean isBlinkInterfaceWebApi() {
 
             return FORM_VALUE_BLINK_INTERFACE_WEB_API.equals(blinkInterface);
@@ -278,14 +308,19 @@ public class Blink1Notifier
             return this.urlBase;
         }
 
+        public double getUrlTime() {
+
+            return this.urlTime;
+        }
+
+        public String getUrlExtra() {
+
+            return this.urlExtra;
+        }
+
         public String getCommandPath() {
 
             return this.commandPath;
-        }
-
-        public String getBlinkInterface() {
-
-            return this.blinkInterface;
         }
     }
 }
