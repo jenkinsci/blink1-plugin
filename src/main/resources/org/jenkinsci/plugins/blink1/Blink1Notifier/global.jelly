@@ -2,33 +2,51 @@
   <f:section title="blink(1) Notifier">
     <f:entry title="blink(1) interface" field="blinkInterface">
       <select name="blink1.blinkInterface"
-            value="${descriptor.blinkInterface()}" 
+            value="${descriptor.blinkInterface()}"
             default="${descriptor.defaultBlinkInterface()}">
           <option selected="${descriptor.isBlinkInterfaceWebApi()}" value="webApi">Local Web API</option>
           <option selected="${descriptor.isBlinkInterfaceCommandline()}" value="commandline">Command-line Tool</option>
       </select>
     </f:entry>
     <f:entry title="URL"
-        description="URL of blink(1)'s local HTTP server"
+        description="URL of blink(1) local/remote HTTP server"
         help="/plugin/blink1/help-url.html"
         field="urlBase">
-        <f:textbox 
+        <f:textbox
             name="blink1.urlBase"
-            value="${descriptor.getUrlBase()}" 
+            value="${descriptor.getUrlBase()}"
             default="${descriptor.defaultUrlBase()}"/>
+    </f:entry>
+    <f:entry title="Time for blink(1) fade command"
+        description="The time (in seconds) that the blink(1) will take to change the color after a build finishes"
+        help="/plugin/blink1/help-urltime.html"
+        field="urlTime">
+        <f:textbox
+            name="blink1.urlTime"
+            value="${descriptor.getUrlTime()}"
+            default="${descriptor.defaultUrlTime()}"/>
+    </f:entry>
+    <f:entry title="URL extra parameters"
+        description="Extra parameters to be passed to blink(1) local/remote HTTP server"
+        help="/plugin/blink1/help-urlextra.html"
+        field="urlExtra">
+        <f:textbox
+            name="blink1.urlExtra"
+            value="${descriptor.getUrlExtra()}"
+            default="${descriptor.defaultUrlExtra()}"/>
     </f:entry>
     <f:entry title="Command path"
         description="Path of blink(1)'s command line tool"
         help="/plugin/blink1/help-command-path.html"
         field="commandPath">
-        <f:textbox 
+        <f:textbox
             name="blink1.commandPath"
-            value="${descriptor.getCommandPath()}" 
+            value="${descriptor.getCommandPath()}"
             default="${descriptor.defaultCommandPath()}"/>
       </f:entry>
       <f:validateButton
            title="Test blink(1) Connection" progress="Testing..."
-           with="blink1.blinkInterface,blink1.urlBase,blink1.commandPath"
+           with="blink1.blinkInterface,blink1.urlBase,blink1.urlTime,blink1.urlExtra,blink1.commandPath"
            method="testBlinkConnection" />
   </f:section>
 </j:jelly>
